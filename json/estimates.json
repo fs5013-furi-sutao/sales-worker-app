@@ -1,0 +1,11 @@
+{
+    "id": 3,
+    "estimateName": "2規オフィスに引っ越し",
+    "estimateAmount": 1000,
+    "budgetedAmount": 1000,
+    "customerCode": "1",
+    "employeeCode": "1",
+    "estimateDate": "2020-09-24T09:18:21.000+00:00",
+    "status": "1",
+    "orderId": 1
+}
