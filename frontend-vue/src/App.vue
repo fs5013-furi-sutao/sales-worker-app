@@ -8,20 +8,21 @@
             <div class="ui sub header">SalesWorker</div>
           </h2>
           <router-link to="/tasks" exact class="item">
-            <i class="tasks icon"></i> Tasks
+            <i class="tasks icon"></i> 見積検索
           </router-link>
-          <router-link to="/tasks/new" class="item">
-            <i class="plus circle icon"></i> New
+          <router-link to="/estimates/new" class="item">
+            <i class="plus circle icon"></i> 見積登録
+          </router-link>
+          <router-link to="/estimates/:id" exact class="item">
+            <i class="tasks icon"></i> 見積詳細
           </router-link>
         </div>
       </div>
     </div>
 
-    <div class="ui text" style="width: 58%; margin: 0 auto">
-      <div class="ui one column grid">
-        <div class="column">
-          <router-view />
-        </div>
+    <div class="ui container">
+      <div class="column">
+        <router-view />
       </div>
     </div>
   </div>
@@ -29,14 +30,18 @@
 
 <script>
 export default {
-  name: "app",
+  name: "app"
 };
 </script>
 
 <style>
+@import "./semantic.css";
 #app > div.navbar {
   margin-bottom: 1.5em;
 }
+/*h1 {
+    margin-bottom: 1em;
+}*/
 .myFlash {
   width: 250px;
   margin: 10px;
@@ -44,18 +49,21 @@ export default {
   top: 50;
   right: 0;
 }
-input {
+/*input {
   width: 300px;
-}
+}*/
 div.label {
   width: 12em;
 }
+div.label.long {
+  width: 20em;
+}
 div.input {
-  margin-bottom: 10px;
+  margin-bottom: 1em;
 }
 button.ui.button {
   /* margin-top: 15px; */
-  display: block;
+  /* display: block;*/
 }
 button.ui.mleft {
   margin-left: 1em;
@@ -116,5 +124,8 @@ button.fixsizebutton {
   position: relative;
   right: 0;
   top: 10px;
+}
+.ui.horizontal.divider {
+  padding: 2em 0 1em 0;
 }
 </style>

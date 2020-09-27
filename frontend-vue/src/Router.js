@@ -22,13 +22,13 @@ export default new Router({
       component: Tasks
     },
     {
-      path: '/tasks/new',
-      name: 'new-task',
+      path: '/estimates/new',
+      name: 'new-estimate',
       component: New
     },
     {
-      path: '/tasks/:id',
-      name: 'show',
+      path: '/estimates/:id',
+      name: 'show-estimate',
       component: Show
     },
     {

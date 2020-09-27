@@ -1,24 +1,48 @@
 <template>
   <div>
     <h1>見積登録</h1>
-    <task-form @createOrUpdate="createOrUpdate"></task-form>
+    <estimate-form @createOrUpdate="createOrUpdate"></estimate-form>
   </div>
 </template>
 
 <script>
-import taskForm from '../components/TaskForm.vue';
-import { api } from '../helpers/Helpers';
+import EstimateForm from "../components/EstimateForm.vue";
+import { api } from "../helpers/Helpers";
 export default {
-  name: 'new-task',
+  name: "new-task",
   components: {
-    'task-form': taskForm
+    "estimate-form": EstimateForm
   },
   methods: {
-    createOrUpdate: async function(task) {
-      const res = await api.createtask(task);
-      this.flash('task created', 'success');
-      this.$router.push(`/tasks/${res._id}`);
+    createOrUpdate: async function(estimate, estimateDetails) {
+      estimate.id = null;
+      const resEstimate = await api.createEatimate(estimate);
+      for (const [key, value] of estimateDetails.entries()) {
+        console.log(key);
+        value["estimateId"] = resEstimate.id;
+      }
+      console.log("estimateDetails=");
+      console.log(estimateDetails);
+      for (let ed of estimateDetails) {
+          console.log('ed=')
+          console.log(ed);
+        let resEstimateDetails = await api.createEatimateDetail(ed);
+        console.log('resEstimateDetails=')
+          console.log(resEstimateDetails);
+        
+      }
+      console.log('resEstimate.id=')
+      console.log(resEstimate.id)
+      this.flash("estimate created", "success");
+      this.$router.push(`/estimates/${resEstimate.id}`);
+      //   this.flash("task created", "success");
+      //   this.$router.push(`/tasks/${res._id}`);
     }
+    // createOrUpdate: async function(task) {
+    //   const res = await api.createtask(task);
+    //   this.flash("task created", "success");
+    //   this.$router.push(`/tasks/${res._id}`);
+    // }
   }
 };
 </script>

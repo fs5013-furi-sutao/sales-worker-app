@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "http://localhost:8082")
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api/v1/")
 public class ProductController {
@@ -55,7 +55,7 @@ public class ProductController {
             @RequestParam(defaultValue = "cd,desc") String[] sort) {
 
         try {
-            List<Order> orders = new ArrayList<Order>();
+            List<Order> orders = new ArrayList<>();
 
             if (sort[0].contains(",")) {
                 // will sort more than 2 fields
@@ -69,13 +69,13 @@ public class ProductController {
                 orders.add(new Order(getSortDirection(sort[1]), sort[0]));
             }
 
-            List<Product> tutorials = productRepository.findAll(Sort.by(orders));
+            List<Product> products = productRepository.findAll(Sort.by(orders));
 
-            if (tutorials.isEmpty()) {
+            if (products.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(tutorials, HttpStatus.OK);
+            return new ResponseEntity<>(products, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -88,7 +88,7 @@ public class ProductController {
             @RequestParam(defaultValue = "cd,desc") String[] sort) {
 
         try {
-            List<Order> orders = new ArrayList<Order>();
+            List<Order> orders = new ArrayList<>();
 
             if (sort[0].contains(",")) {
                 // will sort more than 2 fields
@@ -102,7 +102,7 @@ public class ProductController {
                 orders.add(new Order(getSortDirection(sort[1]), sort[0]));
             }
 
-            List<Product> products = new ArrayList<Product>();
+            List<Product> products = new ArrayList<>();
             Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
 
             Page<Product> pageTuts;

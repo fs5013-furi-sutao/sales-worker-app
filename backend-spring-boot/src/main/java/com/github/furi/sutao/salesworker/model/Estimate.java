@@ -16,23 +16,23 @@ public class Estimate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "estimate_name")
-    private String estimateName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "estimate_amount")
-    private long estimateAmount;
+    @Column(name = "amount")
+    private long amount;
 
     @Column(name = "budgeted_amount")
     private long budgetedAmount;
 
-    @Column(name = "customer_code")
-    private String customerCode;
+    @Column(name = "customer_cd")
+    private String customerCd;
 
-    @Column(name = "employee_code")
-    private String employeeCode;
+    @Column(name = "employee_cd")
+    private String employeeCd;
 
-    @Column(name = "estimate_date")
-    private Date estimateDate;
+    @Column(name = "date")
+    private Date date;
 
     @Column(name = "status")
     private String status;
@@ -43,15 +43,16 @@ public class Estimate {
     public Estimate() {
 	}
 
-    public Estimate(String estimateName, long estimateAmount, long budgetedAmount, 
-        String customerCode, Date estimateDate, String status, long orderId) {
+    public Estimate(String name, long amount, long budgetedAmount, 
+        String customerCode, String employeeCd, Date date, String status, long orderId) {
             
 		super();
-		this.estimateName = estimateName;
-		this.estimateAmount = estimateAmount;
+		this.name = name;
+		this.amount = amount;
         this.budgetedAmount = budgetedAmount;
-        this.customerCode = customerCode;
-		this.estimateDate = estimateDate;
+        this.customerCd = customerCd;
+        this.employeeCd = employeeCd;
+		this.date = date;
         this.status = status;
         this.orderId = orderId;
 	}
@@ -64,20 +65,20 @@ public class Estimate {
         this.id = id;
     }
 
-    public String getEstimateName() {
-        return this.estimateName;
+    public String getName() {
+        return this.name;
     }
 
-    public void setEstimateName(String estimateName) {
-        this.estimateName = estimateName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public long getEstimateAmount() {
-        return this.estimateAmount;
+    public long getAmount() {
+        return this.amount;
     }
 
-    public void setEstimateAmount(long estimateAmount) {
-        this.estimateAmount = estimateAmount;
+    public void setAmount(long amount) {
+        this.amount = amount;
     }
 
     public long getBudgetedAmount() {
@@ -88,28 +89,28 @@ public class Estimate {
         this.budgetedAmount = budgetedAmount;
     }
 
-    public String getCustomerCode() {
-        return this.customerCode;
+    public String getCustomerCd() {
+        return this.customerCd;
     }
 
-    public void setCustomerCode(String customerCode) {
-        this.customerCode = customerCode;
+    public void setCustomerCd(String customerCd) {
+        this.customerCd = customerCd;
     }
 
-    public String getEmployeeCode() {
-        return this.employeeCode;
+    public String getEmployeeCd() {
+        return this.employeeCd;
     }
 
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
+    public void setEmployeeCd(String employeeCd) {
+        this.employeeCd = employeeCd;
     }
 
-    public Date getEstimateDate() {
-        return this.estimateDate;
+    public Date getDate() {
+        return this.date;
     }
 
-    public void setEstimateDate(Date estimateDate) {
-        this.estimateDate = estimateDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getStatus() {

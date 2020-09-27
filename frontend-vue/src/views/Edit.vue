@@ -1,18 +1,18 @@
 <template>
   <div>
-    <h1>Edit task</h1>
-    <task-form @createOrUpdate="createOrUpdate" :task=this.task></task-form>
+    <h1>見積編集</h1>
+    <estimate-form @createOrUpdate="createOrUpdate" :task=this.task></estimate-form>
   </div>
 </template>
 
 <script>
-import taskForm from '../components/TaskForm.vue';
+import EstimateForm from '../components/EstimateForm.vue';
 import { api } from '../helpers/Helpers';
 
 export default {
   name: 'edit',
   components: {
-    'task-form': taskForm
+    'estimate-form': EstimateForm
   },
   data: function() {
     return {
