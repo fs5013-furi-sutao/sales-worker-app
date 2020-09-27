@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Tasks from './views/Tasks.vue';
+import Estimates from './views/Estimates.vue';
 import New from './views/New.vue';
 import Show from './views/Show.vue';
 import Edit from './views/Edit.vue';
@@ -14,12 +14,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/tasks'
+      redirect: '/estimates'
     },
     {
-      path: '/tasks',
-      name: 'tasks',
-      component: Tasks
+      path: '/estimates',
+      name: 'estimates',
+      component: Estimates
     },
     {
       path: '/estimates/new',
@@ -32,7 +32,7 @@ export default new Router({
       component: Show
     },
     {
-      path: '/tasks/:id/edit',
+      path: '/estimates/:id/edit',
       name: 'edit',
       component: Edit
     }

@@ -7,14 +7,11 @@
             販売管理システム
             <div class="ui sub header">SalesWorker</div>
           </h2>
-          <router-link to="/tasks" exact class="item">
+          <router-link to="/estimates" exact class="item">
             <i class="tasks icon"></i> 見積検索
           </router-link>
           <router-link to="/estimates/new" class="item">
             <i class="plus circle icon"></i> 見積登録
-          </router-link>
-          <router-link to="/estimates/:id" exact class="item">
-            <i class="tasks icon"></i> 見積詳細
           </router-link>
         </div>
       </div>
@@ -113,7 +110,7 @@ button.ui.mleft {
 .modal-leave-active .modal-container {
   transform: translateY(30px);
 }
-input.readonly {
+input.readonly, select.readonly {
   color: #999 !important;
   background-color: #f6f6f6 !important;
 }

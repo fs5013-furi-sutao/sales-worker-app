@@ -137,13 +137,13 @@ public class ProductController {
 
     // create product rest api
     @PostMapping("/products")
-    public Product createEstimate(@RequestBody Product product) {
+    public Product createProduct(@RequestBody Product product) {
         return productRepository.save(product);
     }
 
     // get product by id rest api
     @GetMapping("/products/{cd}")
-    public ResponseEntity<Product> getEstimateById(@PathVariable Long cd) {
+    public ResponseEntity<Product> getProductById(@PathVariable Long cd) {
         Product product = productRepository.findById(cd).orElseThrow(
                 () -> new ResourceNotFoundException("Product not exist with cd :" + cd));
         return ResponseEntity.ok(product);
@@ -151,7 +151,7 @@ public class ProductController {
 
     // update product rest api
     @PutMapping("/products/{cd}")
-    public ResponseEntity<Product> updateEstimate(@PathVariable Long cd,
+    public ResponseEntity<Product> updateProduct(@PathVariable Long cd,
             @RequestBody Product productDetails) {
         Product product = productRepository.findById(cd).orElseThrow(
                 () -> new ResourceNotFoundException("Product not exist with cd :" + cd));
@@ -166,7 +166,7 @@ public class ProductController {
 
     // delete product rest api
     @DeleteMapping("/products/{cd}")
-    public ResponseEntity<Map<String, Boolean>> deleteEstimate(@PathVariable Long cd) {
+    public ResponseEntity<Map<String, Boolean>> deleteProduct(@PathVariable Long cd) {
         Product product = productRepository.findById(cd).orElseThrow(
                 () -> new ResourceNotFoundException("Product not exist with id :" + cd));
 

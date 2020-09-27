@@ -41,18 +41,35 @@ public class EstimateDetailController {
     // get estimate detail by id rest api
     @GetMapping("/estimate-details/{id}")
     public ResponseEntity<EstimateDetail> getEstimateById(@PathVariable Long id) {
-        EstimateDetail estimateDetail = estimateDetailRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("EstimateDetail not exist with id :" + id));
+        EstimateDetail estimateDetail = estimateDetailRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "EstimateDetail not exist with id :" + id));
         return ResponseEntity.ok(estimateDetail);
     }
 
-    // update estimate detail rest api
+    // get estimate detail by estimateId rest api
+    @GetMapping("/estimate-details/estimate-id/{estimateId}")
+    public ResponseEntity<List<EstimateDetail>> getEstimateDetailsByEstimateId(
+            @PathVariable Long estimateId) {
+        List<EstimateDetail> estimateDetails = estimateDetailRepository
+                .getEstimateDetailsByEstimateId(estimateId);
+        // .orElseThrow(
+        // () -> new ResourceNotFoundException(
+        // "EstimateDetail not exist with estimateId :" + estimateId));
+        return ResponseEntity.ok(estimateDetails);
+    }
 
+    // update estimate detail rest api
     @PutMapping("/estimate-details/{id}")
     public ResponseEntity<EstimateDetail> updateEstimate(@PathVariable Long id,
             @RequestBody EstimateDetail estimateDetails) {
-        EstimateDetail estimateDetail = estimateDetailRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("EstimateDetail not exist with id :" + id));
+        EstimateDetail estimateDetail = estimateDetailRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "EstimateDetail not exist with id :" + id));
 
         estimateDetail.setSubId(estimateDetails.getSubId());
         estimateDetail.setEstimateId(estimateDetails.getEstimateId());
@@ -65,9 +82,12 @@ public class EstimateDetailController {
 
     // delete estimate detail rest api
     @DeleteMapping("/estimate-details/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteEstimate(@PathVariable Long id) {
-        EstimateDetail estimateDetail = estimateDetailRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("EstimateDetail not exist with id :" + id));
+    public ResponseEntity<Map<String, Boolean>> deleteEstimateDetail(@PathVariable Long id) {
+        EstimateDetail estimateDetail = estimateDetailRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(
+                                "EstimateDetail not exist with id :" + id));
 
         estimateDetailRepository.delete(estimateDetail);
         Map<String, Boolean> response = new HashMap<>();
@@ -75,5 +95,20 @@ public class EstimateDetailController {
         return ResponseEntity.ok(response);
     }
 
-
+    // delete estimate detail rest api
+    @DeleteMapping("/estimate-details/estimate-id/{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteEstimateDetailsByEstimateId(
+            @PathVariable Long id) {
+        List<EstimateDetail> estimateDetails = estimateDetailRepository
+                .getEstimateDetailsByEstimateId(id);
+        // .orElseThrow(
+        // () -> new ResourceNotFoundException(
+        // "EstimateDetail not exist with id :" + id));
+        for (EstimateDetail ed : estimateDetails) {
+            estimateDetailRepository.delete(ed);
+        }
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
 }

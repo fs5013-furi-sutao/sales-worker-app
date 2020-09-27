@@ -1,5 +1,5 @@
 <template>
-  <form action="#" @submit.prevent="">
+  <form action="#" @submit.prevent>
     <p v-if="errorsPresent" class="error">Please fill out both fields!</p>
 
     <div class="ui stackable two column grid">
@@ -225,7 +225,7 @@
 
     <div class="ui stackable one column grid">
       <div class="ui column">
-        <button class="huge orange ui button" @click="register">見積登録</button>
+        <button class="huge orange ui button" @click="createOrUpdate">{{ this.buttonName }}</button>
       </div>
     </div>
 
@@ -279,6 +279,7 @@
 
 <script>
 import Vue from "vue";
+import { api } from "../helpers/Helpers";
 import CustomerSearchModal from "@/components/CustomerSearchModal.vue";
 import EmployeeSearchModal from "@/components/EmployeeSearchModal.vue";
 import ProductSearchModal from "@/components/ProductSearchModal.vue";
@@ -292,6 +293,13 @@ export default {
   },
   name: "estimate-form",
   props: {
+    buttonName: {
+      type: String,
+      required: false
+      //   default: () => {
+      //     return "見積編集";
+      //   }
+    },
     nextDetailSubId: {
       type: Number,
       required: false,
@@ -300,7 +308,7 @@ export default {
       }
     },
     statusOptions: {
-      type: Object,
+      type: Array,
       required: false,
       default: () => {
         return [
@@ -319,28 +327,12 @@ export default {
         ];
       }
     },
-    detailStatus: {
-      type: Object,
-      required: false,
-      default: () => {
-        return [
-          {
-            id: "1",
-            name: "計上"
-          },
-          {
-            id: "2",
-            name: "キャンセル"
-          }
-        ];
-      }
-    },
     estimate: {
       type: Object,
       required: false,
       default: () => {
         return {
-          id: "1",
+          id: "",
           name: "",
           status: "",
           customerCd: "",
@@ -366,13 +358,13 @@ export default {
         };
       }
     },
-    // estimateDetails: {
-    //   type: Array,
-    //   required: false,
-    //   default: () => {
-    //     return [];
-    //   }
-    // },
+    estimateDetails: {
+      type: Array,
+      required: false,
+      default: () => {
+        return [];
+      }
+    },
     task: {
       type: Object,
       required: false,
@@ -421,15 +413,15 @@ export default {
     return {
       errorsPresent: false,
       selectedValue: "",
-      selectedColor: "#bbb",
-      estimateDetails: []
+      selectedColor: "#bbb"
+
+      //   estimateDetails: []
     };
   },
   filters: {
     priceFormat: function(value) {
-      let tmp = "";
-      if (value !== "") return "¥" + value.toLocaleString();
-      return tmp;
+      if (!value) return "";
+      return "¥" + value.toLocaleString();
     }
   },
   methods: {
@@ -452,12 +444,15 @@ export default {
       this.calcEatimateAmount();
       this.calcBudgetOver();
     },
-    onExecRemoveDetail: function(estimateDetail) {
+    async onExecRemoveDetail(estimateDetail) {
       for (const [key, value] of this.estimateDetails.entries()) {
         if (value["subId"] === estimateDetail["subId"]) {
           delete this.estimateDetails.splice(key, 1);
         }
       }
+
+      if (estimateDetail.estimateId === "") return;
+      await api.deleteEatimateDetail(estimateDetail.id);
     },
     onDetailRemove: function(estimateDetail) {
       this.$refs.estimateDetailModal.openEstimateDetailModal(estimateDetail);
@@ -475,7 +470,7 @@ export default {
       }
       return target["name"];
     },
-    async register() {
+    async createOrUpdate() {
       this.$emit("createOrUpdate", this.estimate, this.estimateDetails);
     },
     updateValue: function() {
@@ -493,16 +488,10 @@ export default {
       }
       this.selectedColor = "#bbb";
     },
-    // onSubmit: function() {
-    //   if (this.task.task1 === "" || this.task.task2 === "") {
-    //     this.errorsPresent = true;
-    //   } else {
-    //     this.$emit("createOrUpdate", this.task);
-    //   }
-    // },
-    addDetail: function() {
+    async addDetail() {
       let estimateDetailTmp = Vue.util.extend({}, this.estimateDetail);
       let tmp = Vue.util.extend({}, this.product);
+      estimateDetailTmp.estimateId = this.estimate.id;
       estimateDetailTmp.subId = this.nextDetailSubId;
       estimateDetailTmp.productCd = tmp.cd;
       estimateDetailTmp.productName = tmp.name;
@@ -518,6 +507,9 @@ export default {
       this.product.amount = "";
 
       this.nextDetailSubId++;
+
+      if (estimateDetailTmp.estimateId === "") return;
+      await api.createEatimateDetail(estimateDetailTmp);
     },
     getChild(name) {
       for (let child of this.$children)
