@@ -5,6 +5,8 @@
       @createOrUpdate="createOrUpdate"
       :estimate="this.estimate"
       :estimateDetails="this.estimateDetails"
+      :customer="this.customer"
+      :employee="this.employee"
       :buttonName="this.buttonName"
       :nextDetailSubId="this.nextDetailSubId"
     ></estimate-form>
@@ -18,7 +20,7 @@ import { api } from "../helpers/Helpers";
 export default {
   name: "edit",
   components: {
-    "estimate-form": EstimateForm
+    "estimate-form": EstimateForm,
   },
   props: {
     buttonName: {
@@ -26,14 +28,14 @@ export default {
       required: false,
       default: () => {
         return "見積更新";
-      }
+      },
     },
     nextDetailSubId: {
       type: Number,
       required: false,
       default: () => {
         return 1;
-      }
+      },
     },
     statusOptions: {
       type: Array,
@@ -42,18 +44,18 @@ export default {
         return [
           {
             id: "1",
-            name: "1: 見積中"
+            name: "1: 見積中",
           },
           {
             id: "2",
-            name: "2: 見積完了"
+            name: "2: 見積完了",
           },
           {
             id: "3",
-            name: "3: 受注済"
-          }
+            name: "3: 受注済",
+          },
         ];
-      }
+      },
     },
     estimateDetail: {
       type: Object,
@@ -66,25 +68,25 @@ export default {
           productName: "",
           productPrice: "",
           quantity: "",
-          amount: ""
+          amount: "",
         };
-      }
+      },
     },
     estimateDetails: {
       type: Array,
       required: false,
       default: () => {
         return [];
-      }
-    }
+      },
+    },
   },
-  data: function() {
+  data: function () {
     return {
       task: {},
       estimate: {},
       //   estimateDetails: [],
       customer: {},
-      employee: {}
+      employee: {},
     };
   },
   methods: {
@@ -99,28 +101,28 @@ export default {
       console.log("resEstimate=");
       console.log(resEstimate);
 
-    //   for (const [key, value] of estimateDetails.entries()) {
-    //     console.log(key);
-    //     value["estimateId"] = resEstimate.id;
-    //   }
-    //   console.log("estimateDetails=");
-    //   console.log(estimateDetails);
-    //   for (let ed of estimateDetails) {
-    //     console.log("ed=");
-    //     console.log(ed);
-    //     let resEstimateDetails = await api.createEatimateDetail(ed);
-    //     console.log("resEstimateDetails=");
-    //     console.log(resEstimateDetails);
-    //   }
-    //   console.log("resEstimate.id=");
-    //   console.log(resEstimate.id);
+      //   for (const [key, value] of estimateDetails.entries()) {
+      //     console.log(key);
+      //     value["estimateId"] = resEstimate.id;
+      //   }
+      //   console.log("estimateDetails=");
+      //   console.log(estimateDetails);
+      //   for (let ed of estimateDetails) {
+      //     console.log("ed=");
+      //     console.log(ed);
+      //     let resEstimateDetails = await api.createEatimateDetail(ed);
+      //     console.log("resEstimateDetails=");
+      //     console.log(resEstimateDetails);
+      //   }
+      //   console.log("resEstimate.id=");
+      //   console.log(resEstimate.id);
       this.flash("estimate updated", "success");
       this.$router.push(`/estimates/${resEstimate.id}`);
     },
-    calcBudgetOver: function() {
+    calcBudgetOver: function () {
       this.estimate.budgetOver =
         this.estimate.amount - this.estimate.budgetedAmount;
-    }
+    },
   },
   async mounted() {
     this.estimate = await api.getEstimate(this.$route.params.id);
@@ -130,6 +132,12 @@ export default {
     let estimateDetailTmp = await api.getEstimateDetailsByEstimateId(
       this.estimate.id
     );
+
+    console.log("customer=");
+    console.log(this.customer.name);
+
+    console.log("employee=");
+    console.log(this.employee.name);
 
     let maxSubId = 1;
     for (const [key, value] of estimateDetailTmp.entries()) {
@@ -144,12 +152,12 @@ export default {
         productName: product.name,
         productPrice: product.price,
         quantity: value["quantity"],
-        amount: product.price * value["quantity"]
+        amount: product.price * value["quantity"],
       });
 
       if (maxSubId < value["subId"]) maxSubId = value["subId"];
     }
     this.nextDetailSubId = ++maxSubId;
-  }
+  },
 };
 </script>

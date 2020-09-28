@@ -6,10 +6,14 @@
       <div class="ui column"></div>
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="calendar plus icon"></i>見積番号
-          </div>
-          <input class="readonly" type="text" placeholder="自動採番" v-model="estimate.id" readonly />
+          <div class="ui label"><i class="calendar plus icon"></i>見積番号</div>
+          <input
+            class="readonly"
+            type="text"
+            placeholder="自動採番"
+            v-model="estimate.id"
+            readonly
+          />
         </div>
       </div>
     </div>
@@ -20,7 +24,11 @@
           <div class="ui label">
             <i class="calendar plus icon"></i>見積案件名
           </div>
-          <input type="text" placeholder="例）新規オフィス（伏見）への移転に伴う機器・用品調達" v-model="estimate.name" />
+          <input
+            type="text"
+            placeholder="例）新規オフィス（伏見）への移転に伴う機器・用品調達"
+            v-model="estimate.name"
+          />
         </div>
       </div>
       <div class="ui column">
@@ -30,7 +38,7 @@
           </div>
           <select
             class="ui dropdown fluid"
-            :style="{color: selectedColor}"
+            :style="{ color: selectedColor }"
             v-model="estimate.status"
             @change="updateValue"
             @click="onClickSelect"
@@ -42,7 +50,9 @@
               v-for="status in statusOptions"
               :key="status.id"
               :value="status.id"
-            >{{ status.name }}</option>
+            >
+              {{ status.name }}
+            </option>
           </select>
         </div>
       </div>
@@ -51,9 +61,7 @@
     <div class="ui stackable two column grid">
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 顧客名
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 顧客名</div>
           <input
             class="readonly"
             type="text"
@@ -64,14 +72,14 @@
           <button
             class="primary ui button mleft fixsizebutton"
             @click="openCustomerSearchModal"
-          >顧客検索</button>
+          >
+            顧客検索
+          </button>
         </div>
       </div>
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 担当者名
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 担当者名</div>
           <input
             class="readonly"
             type="text"
@@ -82,7 +90,9 @@
           <button
             class="primary ui button mleft fixsizebutton"
             @click="openEmployeeSearchModal"
-          >担当者検索</button>
+          >
+            担当者検索
+          </button>
         </div>
       </div>
     </div>
@@ -90,14 +100,12 @@
     <div class="ui stackable two column grid">
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 予算金額
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 予算金額</div>
           <input
             type="text"
-            placeholder="Enter Details"
+            placeholder="予算金額を入力してください"
             v-model="estimate.budgetedAmount"
-            @keyup="calcBudgetOver()"
+            @keyup="calcBudgetOver"
           />
         </div>
       </div>
@@ -109,7 +117,7 @@
           <input
             class="readonly"
             type="text"
-            placeholder="Enter Details"
+            placeholder="予算金額を入力してください"
             v-bind:value="estimate.budgetOver | priceFormat"
             readonly
           />
@@ -120,13 +128,11 @@
     <div class="ui stackable two column grid">
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 合計金額
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 合計金額</div>
           <input
             class="readonly"
             type="text"
-            placeholder="Enter Details"
+            placeholder="見積商品を追加してください"
             v-bind:value="estimate.amount | priceFormat"
             readonly
           />
@@ -145,22 +151,25 @@
           <input
             class="readonly"
             type="text"
-            placeholder="Enter Details"
+            placeholder="商品を選択してください"
             v-model="product.cd"
             readonly
           />
-          <button class="primary ui button mleft fixsizebutton" @click="openModal">商品検索</button>
+          <button
+            class="primary ui button mleft fixsizebutton"
+            @click="openModal"
+          >
+            商品検索
+          </button>
         </div>
       </div>
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 商品名
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 商品名</div>
           <input
             class="readonly"
             type="text"
-            placeholder="Enter Details"
+            placeholder="商品を選択してください"
             v-model="product.name"
             readonly
           />
@@ -171,26 +180,25 @@
     <div class="ui stackable two column grid">
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 単価
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 単価</div>
           <input
             class="readonly"
             type="text"
-            placeholder="Enter Details"
+            placeholder="商品を選択してください"
             v-bind:value="product.price | priceFormat"
             readonly
           />
+          <button class="ui button mleft fixsizebutton" @click="onClearProduct">
+            商品をクリア
+          </button>
         </div>
       </div>
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 数量
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 数量</div>
           <input
             type="text"
-            placeholder="Enter Details"
+            placeholder="数量を入力してください"
             v-model="product.quantity"
             @keyup="onProductQuantityChange"
           />
@@ -201,13 +209,10 @@
     <div class="ui stackable two column grid">
       <div class="ui column">
         <div class="ui labeled input fluid">
-          <div class="ui label">
-            <i class="info circle icon"></i> 金額
-          </div>
+          <div class="ui label"><i class="info circle icon"></i> 金額</div>
           <input
             class="readonly"
             type="text"
-            placeholder="Enter Details"
             v-bind:value="product.amount | priceFormat"
             readonly
           />
@@ -217,7 +222,9 @@
 
     <div class="ui stackable one column grid">
       <div class="ui column">
-        <button class="positive ui button" @click="addDetail">明細に追加</button>
+        <button class="positive ui button" @click="addDetail">
+          明細に追加
+        </button>
       </div>
     </div>
 
@@ -225,32 +232,24 @@
 
     <div class="ui stackable one column grid">
       <div class="ui column">
-        <button class="huge orange ui button" @click="createOrUpdate">{{ this.buttonName }}</button>
+        <button class="huge orange ui button" @click="createOrUpdate">
+          {{ this.buttonName }}
+        </button>
       </div>
     </div>
 
     <div class="ui horizontal divider">見積明細</div>
 
-    <div style="padding-bottom: 4em;" class="ui stackable one column grid">
+    <div style="padding-bottom: 4em" class="ui stackable one column grid">
       <div class="ui column">
         <table class="ui celled compact table">
           <thead>
             <tr>
-              <th>
-                <i class="calendar plus icon"></i>枝番
-              </th>
-              <th>
-                <i class="info circle icon"></i>商品名
-              </th>
-              <th>
-                <i class="info circle icon"></i>単価
-              </th>
-              <th>
-                <i class="info circle icon"></i>数量
-              </th>
-              <th>
-                <i class="info circle icon"></i>金額
-              </th>
+              <th><i class="calendar plus icon"></i>枝番</th>
+              <th><i class="info circle icon"></i>商品名</th>
+              <th><i class="info circle icon"></i>単価</th>
+              <th><i class="info circle icon"></i>数量</th>
+              <th><i class="info circle icon"></i>金額</th>
               <th>
                 <i class="edit icon"></i>
               </th>
@@ -263,7 +262,7 @@
             <td>{{ estimateDetail.quantity }}</td>
             <td>{{ estimateDetail.amount | priceFormat }}</td>
             <td class="center aligned" @click="onDetailRemove(estimateDetail)">
-              <a style="cursor: pointer;">削除</a>
+              <a style="cursor: pointer">削除</a>
             </td>
           </tr>
         </table>
@@ -280,22 +279,22 @@
 <script>
 import Vue from "vue";
 import { api } from "../helpers/Helpers";
-import CustomerSearchModal from "@/components/CustomerSearchModal.vue";
-import EmployeeSearchModal from "@/components/EmployeeSearchModal.vue";
-import ProductSearchModal from "@/components/ProductSearchModal.vue";
-import EstimateDetailEditModal from "@/components/EstimateDetailEditModal.vue";
+import CustomerSearchModal from "@/components/CustomerSearchModal";
+import EmployeeSearchModal from "@/components/EmployeeSearchModal";
+import ProductSearchModal from "@/components/ProductSearchModal";
+import EstimateDetailEditModal from "@/components/EstimateDetailEditModal";
 export default {
   components: {
     CustomerSearchModal,
     EmployeeSearchModal,
     ProductSearchModal,
-    EstimateDetailEditModal
+    EstimateDetailEditModal,
   },
   name: "estimate-form",
   props: {
     buttonName: {
       type: String,
-      required: false
+      required: false,
       //   default: () => {
       //     return "見積編集";
       //   }
@@ -305,7 +304,7 @@ export default {
       required: false,
       default: () => {
         return 1;
-      }
+      },
     },
     statusOptions: {
       type: Array,
@@ -314,18 +313,18 @@ export default {
         return [
           {
             id: "1",
-            name: "1: 見積中"
+            name: "1: 見積中",
           },
           {
             id: "2",
-            name: "2: 見積完了"
+            name: "2: 見積完了",
           },
           {
             id: "3",
-            name: "3: 受注済"
-          }
+            name: "3: 受注済",
+          },
         ];
-      }
+      },
     },
     estimate: {
       type: Object,
@@ -339,9 +338,9 @@ export default {
           employeeCd: "",
           budgetedAmount: "",
           budgetOver: "",
-          amount: ""
+          amount: "",
         };
-      }
+      },
     },
     estimateDetail: {
       type: Object,
@@ -354,27 +353,27 @@ export default {
           productName: "",
           productPrice: "",
           quantity: "",
-          amount: ""
+          amount: "",
         };
-      }
+      },
     },
     estimateDetails: {
       type: Array,
       required: false,
       default: () => {
         return [];
-      }
+      },
     },
-    task: {
-      type: Object,
-      required: false,
-      default: () => {
-        return {
-          task1: "",
-          task2: ""
-        };
-      }
-    },
+    // task: {
+    //   type: Object,
+    //   required: false,
+    //   default: () => {
+    //     return {
+    //       task1: "",
+    //       task2: "",
+    //     };
+    //   },
+    // },
     product: {
       type: Object,
       required: false,
@@ -384,9 +383,9 @@ export default {
           name: "",
           price: "",
           quantity: "",
-          amount: ""
+          amount: "",
         };
-      }
+      },
     },
     customer: {
       type: Object,
@@ -394,9 +393,9 @@ export default {
       default: () => {
         return {
           cd: "",
-          name: ""
+          name: "",
         };
-      }
+      },
     },
     employee: {
       type: Object,
@@ -404,32 +403,32 @@ export default {
       default: () => {
         return {
           cd: "",
-          name: ""
+          name: "",
         };
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       errorsPresent: false,
       selectedValue: "",
-      selectedColor: "#bbb"
+      selectedColor: "#bbb",
 
       //   estimateDetails: []
     };
   },
   filters: {
-    priceFormat: function(value) {
+    priceFormat: function (value) {
       if (!value) return "";
       return "¥" + value.toLocaleString();
-    }
+    },
   },
   methods: {
-    calcBudgetOver: function() {
+    calcBudgetOver: function () {
       this.estimate.budgetOver =
         this.estimate.amount - this.estimate.budgetedAmount;
     },
-    calcEatimateAmount: function() {
+    calcEatimateAmount: function () {
       let sum = 0;
       for (const [key, value] of this.estimateDetails.entries()) {
         console.log(key);
@@ -439,7 +438,7 @@ export default {
       this.estimate.amount = sum;
     },
 
-    onProductQuantityChange: function() {
+    onProductQuantityChange: function () {
       this.product.amount = this.product.price * this.product.quantity;
       this.calcEatimateAmount();
       this.calcBudgetOver();
@@ -454,7 +453,7 @@ export default {
       if (estimateDetail.estimateId === "") return;
       await api.deleteEatimateDetail(estimateDetail.id);
     },
-    onDetailRemove: function(estimateDetail) {
+    onDetailRemove: function (estimateDetail) {
       this.$refs.estimateDetailModal.openEstimateDetailModal(estimateDetail);
     },
     isDetailCancel(statusId) {
@@ -473,15 +472,15 @@ export default {
     async createOrUpdate() {
       this.$emit("createOrUpdate", this.estimate, this.estimateDetails);
     },
-    updateValue: function() {
+    updateValue: function () {
       if (this.estimate.status !== "") {
         this.selectedColor = "black";
       }
     },
-    onClickSelect: function() {
+    onClickSelect: function () {
       this.selectedColor = "black";
     },
-    onBlurSelect: function() {
+    onBlurSelect: function () {
       if (this.estimate.status !== "") {
         this.selectedColor = "black";
         return;
@@ -511,20 +510,27 @@ export default {
       if (estimateDetailTmp.estimateId === "") return;
       await api.createEatimateDetail(estimateDetailTmp);
     },
+    onClearProduct: function () {
+      this.product.cd = "";
+      this.product.name = "";
+      this.product.price = "";
+      this.product.quantity = "";
+      this.product.amount = "";
+    },
     getChild(name) {
       for (let child of this.$children)
         if (child.$options.name == name) return child;
     },
-    openModal: function() {
+    openModal: function () {
       this.$refs.modal.openModal();
     },
-    openCustomerSearchModal: function() {
+    openCustomerSearchModal: function () {
       this.$refs.customerSearchModal.openModal();
     },
-    openEmployeeSearchModal: function() {
+    openEmployeeSearchModal: function () {
       this.$refs.employeeSearchModal.openModal();
-    }
-  }
+    },
+  },
 };
 </script>
 

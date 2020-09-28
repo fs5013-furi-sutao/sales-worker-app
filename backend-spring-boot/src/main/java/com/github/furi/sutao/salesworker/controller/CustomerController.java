@@ -86,7 +86,7 @@ public class CustomerController {
     @GetMapping("/customers/name")
     public ResponseEntity<Map<String, Object>> getAllCustomersPage(
             @RequestParam(required = false) String name, @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size,
+            @RequestParam(defaultValue = "30") int size,
             @RequestParam(defaultValue = "cd,desc") String[] sort) {
 
         try {

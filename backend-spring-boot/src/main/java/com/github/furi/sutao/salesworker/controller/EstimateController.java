@@ -32,10 +32,39 @@ public class EstimateController {
         return estimateRepository.findAll();
     }
 
+    // get all estimates by like id
+    @GetMapping("/estimates/like-id/{id}")
+    public List<Estimate> getEstimatesByLikeId(@PathVariable String id) {
+        return estimateRepository.getEstimatesByLikeId(id);
+    }
+
+    // get all estimates by like name
+    @GetMapping("/estimates/like-name/{name}")
+    public List<Estimate> getEstimatesByLikeName(@PathVariable String name) {
+        return estimateRepository.getEstimatesByLikeName(name);
+    }
+
+    // get all estimates by like status
+    @GetMapping("/estimates/like-status/{status}")
+    public List<Estimate> getEstimatesByLikeStatus(@PathVariable String status) {
+        return estimateRepository.getEstimatesByLikeStatus(status);
+    }
+    
+    // get all estimates by customer code
+    @GetMapping("/estimates/customer-cd/{cd}")
+    public List<Estimate> getEstimatesByCustomerCd(@PathVariable String cd) {
+        return estimateRepository.getEstimatesByCustomerCd(cd);
+    }
+
+    // get all estimates by employee code
+    @GetMapping("/estimates/employee-cd/{cd}")
+    public List<Estimate> getEstimatesByEmployeeCd(@PathVariable String cd) {
+        return estimateRepository.getEstimatesByEmployeeCd(cd);
+    }
+
     // create estimate rest api
     @PostMapping("/estimates")
     public Estimate createEstimate(@RequestBody Estimate estimate) {
-        System.out.println("name=" + estimate.getName());
         return estimateRepository.save(estimate);
     }
 

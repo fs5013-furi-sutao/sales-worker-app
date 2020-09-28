@@ -9,7 +9,7 @@
           <div class="ui label long">
             <i class="info circle icon"></i> 商品名（部分一致）
           </div>
-          <input type="text" placeholder="Enter Details" v-model="search.name" />
+          <input type="text" placeholder="商品名を入力してください" v-model="search.name" />
           <button class="primary ui button mleft" @click="searchProducts()">検索</button>
         </div>
         <div class="ui horizontal divider">検索結果</div>
@@ -18,13 +18,13 @@
           <thead>
             <tr>
               <th>
-                <i class="calendar plus icon"></i>Task
+                <i class="calendar plus icon"></i>商品コード
               </th>
               <th>
-                <i class="info circle icon"></i>Detail
+                <i class="info circle icon"></i>商品名
               </th>
               <th>
-                <i class="info circle icon"></i>Detail
+                <i class="info circle icon"></i>単価
               </th>
               <th>
                 <i class="edit icon"></i>

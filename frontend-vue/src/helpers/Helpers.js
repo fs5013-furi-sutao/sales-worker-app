@@ -20,32 +20,6 @@ const handleError = fn => (...params) =>
 
 export const api = {
 
-    // Tasks
-    gettask: handleError(async id => {
-        const res = await axios.get(baseURL + id);
-        return res.data;
-    }),
-    gettasks: handleError(async () => {
-        const res = await axios.get(baseURL);
-        return res.data;
-    }),
-    getMaxCd: handleError(async () => {
-        const res = await axios.get(baseURL + 'maxcd');
-        return res.data;
-    }),
-    deletetask: handleError(async id => {
-        const res = await axios.delete(baseURL + id);
-        return res.data;
-    }),
-    createtask: handleError(async payload => {
-        const res = await axios.post(baseURL, payload);
-        return res.data;
-    }),
-    updatetask: handleError(async payload => {
-        const res = await axios.put(baseURL + payload._id, payload);
-        return res.data;
-    }),
-
     // Estimate
     createEatimate: handleError(async payload => {
         const res = await axios.post(baseURL + 'estimates', payload);
@@ -57,6 +31,26 @@ export const api = {
     }),
     getEstimate: handleError(async id => {
         const res = await axios.get(baseURL + 'estimates/' + id);
+        return res.data;
+    }),
+    getEstimatesByLikeId: handleError(async id => {
+        const res = await axios.get(baseURL + 'estimates/like-id/' + id);
+        return res.data;
+    }),
+    getEstimatesByLikeName: handleError(async name => {
+        const res = await axios.get(baseURL + 'estimates/like-name/' + name);
+        return res.data;
+    }),
+    getEstimatesByLikeStatus: handleError(async name => {
+        const res = await axios.get(baseURL + 'estimates/like-status/' + name);
+        return res.data;
+    }),
+    getEstimatesByCustomerCd: handleError(async cd => {
+        const res = await axios.get(baseURL + 'estimates/customer-cd/' + cd);
+        return res.data;
+    }),
+    getEstimatesByEmployeeCd: handleError(async cd => {
+        const res = await axios.get(baseURL + 'estimates/employee-cd/' + cd);
         return res.data;
     }),
     deleteEatimate: handleError(async id => {

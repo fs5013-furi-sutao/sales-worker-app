@@ -9,20 +9,22 @@
           <div class="ui label long">
             <i class="info circle icon"></i> 会社・個人名（部分一致）
           </div>
-          <input type="text" placeholder="Enter Details" v-model="search.name" />
-          <button class="primary ui button mleft" @click="searchCustomers">検索</button>
+          <input
+            type="text"
+            placeholder="顧客名を入力してください"
+            v-model="search.name"
+          />
+          <button class="primary ui button mleft" @click="searchCustomers">
+            検索
+          </button>
         </div>
         <div class="ui horizontal divider">検索結果</div>
 
         <table id="tasks" class="ui celled compact table">
           <thead>
             <tr>
-              <th>
-                <i class="calendar plus icon"></i>顧客コード
-              </th>
-              <th>
-                <i class="info circle icon"></i>顧客名
-              </th>
+              <th><i class="calendar plus icon"></i>顧客コード</th>
+              <th><i class="info circle icon"></i>顧客名</th>
               <th>
                 <i class="edit icon"></i>
               </th>
@@ -31,8 +33,12 @@
           <tr v-for="(customer, i) in customers" :key="i">
             <td>{{ customer.cd }}</td>
             <td>{{ customer.name }}</td>
-            <td width="75" class="center aligned" @click.prevent="onChoice(customer)">
-              <a style="cursor: pointer;">選択</a>
+            <td
+              width="75"
+              class="center aligned"
+              @click.prevent="onChoice(customer)"
+            >
+              <a style="cursor: pointer">選択</a>
             </td>
           </tr>
         </table>
@@ -50,9 +56,9 @@ export default {
       required: false,
       default: () => {
         return {
-          name: ""
+          name: "",
         };
-      }
+      },
     },
     customer: {
       type: Object,
@@ -60,28 +66,28 @@ export default {
       default: () => {
         return {
           cd: "",
-          name: ""
+          name: "",
         };
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       customers: [],
-      showContent: false
+      showContent: false,
     };
   },
   methods: {
-    openModal: function() {
+    openModal: function () {
       this.showContent = true;
     },
-    closeModal: function() {
+    closeModal: function () {
       this.showContent = false;
     },
-    stopEvent: function() {
+    stopEvent: function () {
       event.stopPropagation();
     },
-    onChoice: function(customer) {
+    onChoice: function (customer) {
       this.$parent.customer.cd = customer.cd;
       this.$parent.customer.name = customer.name;
       this.$parent.estimate.customerCd = customer.cd;
@@ -91,7 +97,7 @@ export default {
       this.customers = await api.getCustomersByName(this.search.name);
       this.customers = this.customers.customers;
       this.showContent = true;
-    }
-  }
+    },
+  },
 };
 </script>

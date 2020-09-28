@@ -9,7 +9,7 @@
           <div class="ui label long">
             <i class="info circle icon"></i> 従業員名（部分一致）
           </div>
-          <input type="text" placeholder="Enter Details" v-model="search.name" />
+          <input type="text" placeholder="従業員名を入力してください" v-model="search.name" />
           <button class="primary ui button mleft" @click="searchCustomers">検索</button>
         </div>
         <div class="ui horizontal divider">検索結果</div>

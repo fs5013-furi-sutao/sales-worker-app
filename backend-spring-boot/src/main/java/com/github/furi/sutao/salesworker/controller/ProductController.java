@@ -84,7 +84,7 @@ public class ProductController {
     @GetMapping("/products/name")
     public ResponseEntity<Map<String, Object>> getAllProductsPage(
             @RequestParam(required = false) String name, @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size,
+            @RequestParam(defaultValue = "30") int size,
             @RequestParam(defaultValue = "cd,desc") String[] sort) {
 
         try {
