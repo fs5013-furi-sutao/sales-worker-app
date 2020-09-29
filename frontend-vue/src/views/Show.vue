@@ -134,9 +134,6 @@
                 <th>
                   <i class="info circle icon"></i>金額
                 </th>
-                <!-- <th>
-                  <i class="edit icon"></i>
-                </th>-->
               </tr>
             </thead>
             <tr v-for="(estimateDetail, i) in estimateDetails" :key="i">
@@ -145,28 +142,13 @@
               <td>{{ estimateDetail.productPrice | priceFormat }}</td>
               <td>{{ estimateDetail.quantity }}</td>
               <td>{{ estimateDetail.amount | priceFormat }}</td>
-              <!-- <td class="center aligned">
-                <a style="cursor: pointer;">削除</a>
-              </td>-->
             </tr>
           </table>
         </div>
       </div>
       <EstimateDeleteModal ref="estimateDeleteModal" />
     </form>
-    <!-- <div class="ui labeled input fluid">
-      <div class="ui label">
-      <i class="tasks icon"></i>  Task
-      </div>
-      <input type="text" readonly  :value="task.task1"/>
-    </div>
 
-     <div class="ui labeled input fluid">
-      <div class="ui label">
-        <i class="info circle icon"></i> Details
-      </div>
-      <input type="text" readonly  :value="task.task2"/>
-    </div>-->
   </div>
 </template>
 

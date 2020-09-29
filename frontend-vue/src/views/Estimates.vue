@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- Spring Data JPAで動的にクエリを生成するQuery by Example機能 -->
-    <!-- https://dawaan.com/spring-data-jpa-qbe/ -->
     <h1>見積検索</h1>
 
     <p>検索条件に部分一致した見積情報が結果に表示されます。</p>
@@ -14,7 +12,6 @@
           <input
             type="text"
             v-model="searchCondition.estimateId"
-            @click="onSearchById"
           />
           <button
             class="primary ui button mleft fixsizebutton"
@@ -283,18 +280,19 @@ export default {
       );
       if (this.isNoSearchResults(this.estimateJson)) return;
 
-      for (const [key, value] of this.estimateJson.entries()) {
-        console.log(key);
-        let customer = await api.getCustomersByCd(value["customerCd"]);
-        let employee = await api.getEmployeesByCd(value["employeeCd"]);
+      for (const [, v] of this.estimateJson.entries()) {
+        let customer = await api.getCustomersByCd(v["customerCd"]);
+        let employee = await api.getEmployeesByCd(v["employeeCd"]);
+        let statusName = this.getStatusName(v);
 
         this.estimates.push({
-          id: value["id"],
-          name: value["name"],
+          id: v["id"],
+          name: v["name"],
+          status: statusName,
           customerName: customer.name,
           employeeName: employee.name,
-          budgetedAmount: value["budgetedAmount"],
-          amount: value["amount"],
+          budgetedAmount: v["budgetedAmount"],
+          amount: v["amount"],
         });
       }
     },
@@ -307,18 +305,19 @@ export default {
       );
       if (this.isNoSearchResults(this.estimateJson)) return;
 
-      for (const [key, value] of this.estimateJson.entries()) {
-        console.log(key);
-        let customer = await api.getCustomersByCd(value["customerCd"]);
-        let employee = await api.getEmployeesByCd(value["employeeCd"]);
+      for (const [, v] of this.estimateJson.entries()) {
+        let customer = await api.getCustomersByCd(v["customerCd"]);
+        let employee = await api.getEmployeesByCd(v["employeeCd"]);
+        let statusName = this.getStatusName(v);
 
         this.estimates.push({
-          id: value["id"],
-          name: value["name"],
+          id: v["id"],
+          name: v["name"],
+          status: statusName,
           customerName: customer.name,
           employeeName: employee.name,
-          budgetedAmount: value["budgetedAmount"],
-          amount: value["amount"],
+          budgetedAmount: v["budgetedAmount"],
+          amount: v["amount"],
         });
       }
     },
@@ -331,18 +330,19 @@ export default {
       );
       if (this.isNoSearchResults(this.estimateJson)) return;
 
-      for (const [key, value] of this.estimateJson.entries()) {
-        console.log(key);
-        let customer = await api.getCustomersByCd(value["customerCd"]);
-        let employee = await api.getEmployeesByCd(value["employeeCd"]);
+      for (const [, v] of this.estimateJson.entries()) {
+        let customer = await api.getCustomersByCd(v["customerCd"]);
+        let employee = await api.getEmployeesByCd(v["employeeCd"]);
+        let statusName = this.getStatusName(v);
 
         this.estimates.push({
-          id: value["id"],
-          name: value["name"],
+          id: v["id"],
+          name: v["name"],
+          status: statusName,
           customerName: customer.name,
           employeeName: employee.name,
-          budgetedAmount: value["budgetedAmount"],
-          amount: value["amount"],
+          budgetedAmount: v["budgetedAmount"],
+          amount: v["amount"],
         });
       }
     },
@@ -353,20 +353,26 @@ export default {
       this.estimateJson = await api.getEstimatesByCustomerCd(this.customer.cd);
       if (this.isNoSearchResults(this.estimateJson)) return;
 
-      for (const [key, value] of this.estimateJson.entries()) {
-        console.log(key);
-        let customer = await api.getCustomersByCd(value["customerCd"]);
-        let employee = await api.getEmployeesByCd(value["employeeCd"]);
+      for (const [, v] of this.estimateJson.entries()) {
+        let customer = await api.getCustomersByCd(v["customerCd"]);
+        let employee = await api.getEmployeesByCd(v["employeeCd"]);
+        let statusName = this.getStatusName(v);
 
         this.estimates.push({
-          id: value["id"],
-          name: value["name"],
+          id: v["id"],
+          name: v["name"],
+          status: statusName,
           customerName: customer.name,
           employeeName: employee.name,
-          budgetedAmount: value["budgetedAmount"],
-          amount: value["amount"],
+          budgetedAmount: v["budgetedAmount"],
+          amount: v["amount"],
         });
       }
+    },
+    getStatusName: function (value) {
+      return this.statusOptions.filter(function (el) {
+        if (el["id"] === value["status"]) return true;
+      })[0].name;
     },
     async onSearchByEmployee() {
       this.estimates = [];
@@ -375,18 +381,19 @@ export default {
       this.estimateJson = await api.getEstimatesByCustomerCd(this.employee.cd);
       if (this.isNoSearchResults(this.estimateJson)) return;
 
-      for (const [key, value] of this.estimateJson.entries()) {
-        console.log(key);
-        let customer = await api.getCustomersByCd(value["customerCd"]);
-        let employee = await api.getEmployeesByCd(value["employeeCd"]);
+      for (const [, v] of this.estimateJson.entries()) {
+        let customer = await api.getCustomersByCd(v["customerCd"]);
+        let employee = await api.getEmployeesByCd(v["employeeCd"]);
+        let statusName = this.getStatusName(v);
 
         this.estimates.push({
-          id: value["id"],
-          name: value["name"],
+          id: v["id"],
+          name: v["name"],
+          status: statusName,
           customerName: customer.name,
           employeeName: employee.name,
-          budgetedAmount: value["budgetedAmount"],
-          amount: value["amount"],
+          budgetedAmount: v["budgetedAmount"],
+          amount: v["amount"],
         });
       }
     },
@@ -413,10 +420,7 @@ export default {
       this.$refs.employeeSearchModal.openModal();
     },
   },
-  async mounted() {
-    this.tasks = await api.gettasks();
-    this.maxCd = await api.getMaxCd();
-  },
+  async mounted() {},
 };
 </script>
 
