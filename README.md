@@ -43,7 +43,7 @@ cd ./frontend-vue
 
 必要な Node モジュールをインストール
 ```console
-yarn install
+yarn
 ```
 
 フロントエンドサーバを起動する
